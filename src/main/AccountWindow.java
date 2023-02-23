@@ -27,7 +27,6 @@ import javax.swing.event.ListSelectionListener;
 import exceptions.InstanceNotFoundException;
 import modelo.AccMovement;
 import modelo.Account;
-import modelo.Departamento;
 import modelo.Empleado;
 import modelo.servicio.AccountServicio;
 import modelo.servicio.DepartamentoServicio;
@@ -39,7 +38,7 @@ import modelo.servicio.IEmpleadoServicio;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
-public class DeptWindow extends JFrame {
+public class AccountWindow extends JFrame {
 
 	/**
 	 * 
@@ -53,7 +52,7 @@ public class DeptWindow extends JFrame {
 	private IAccountServicio accountServicio;
 	private IDepartamentoServicio departamentoServicio;
 	private IEmpleadoServicio empleadoservicio;
-	private CreateNewDeptDialog createDialog;
+	private CreateNewAccountDialog createDialog;
 	private JButton btnShowAllCuentas;
 	private JButton btnCrearNuevaCuenta;
 	private JButton btnModificarImporteCuenta;
@@ -69,7 +68,7 @@ public class DeptWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DeptWindow frame = new DeptWindow();
+					AccountWindow frame = new AccountWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,7 +80,7 @@ public class DeptWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DeptWindow() {
+	public AccountWindow() {
 
 		departamentoServicio = new DepartamentoServicio();
 		accountServicio=new AccountServicio();
@@ -192,7 +191,7 @@ public class DeptWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				JFrame owner = (JFrame) SwingUtilities.getRoot((Component) e.getSource());
-				createDialog = new CreateNewDeptDialog(owner, "Crear nueva cuenta",
+				createDialog = new CreateNewAccountDialog(owner, "Crear nueva cuenta",
 						Dialog.ModalityType.DOCUMENT_MODAL, null, empleado);
 				showDialog();
 			}
@@ -211,7 +210,7 @@ public class DeptWindow extends JFrame {
 
 						JFrame owner = (JFrame) SwingUtilities.getRoot((Component) e.getSource());
 
-						createDialog = new CreateNewDeptDialog(owner, "Modificar cuenta",
+						createDialog = new CreateNewAccountDialog(owner, "Modificar cuenta",
 								Dialog.ModalityType.DOCUMENT_MODAL, cuenta, empleado);
 						showDialogModificarCuenta(cuenta);
 					}
@@ -231,7 +230,7 @@ public class DeptWindow extends JFrame {
 					btnModificarImporteCuenta.setEnabled((selectedIx > -1));
 					btnEliminarCuenta.setEnabled((selectedIx > -1));
 					if (selectedIx > -1) {
-						Account cuenta = (Account) DeptWindow.this.JListAllCuentas.getModel().getElementAt(selectedIx);
+						Account cuenta = (Account) AccountWindow.this.JListAllCuentas.getModel().getElementAt(selectedIx);
 						if (cuenta != null) {
 							addMensaje(true, "Se ha seleccionado la cuenta" + cuenta);
 						}
@@ -307,7 +306,7 @@ public class DeptWindow extends JFrame {
 
 	private void update(Account cuentaAModificar, double cantidad) {
 		try {
-			AccMovement nuevo = accountServicio.modificar(cuentaAModificar, cantidad);
+			AccMovement nuevo = accountServicio.modificar(cuentaAModificar.getAccountno(), cantidad);
 			if (nuevo != null) {
 				addMensaje(true, "Se ha modificado la cuenta con id: " + cuentaAModificar.getAccountno());
 				getAllCuentas();
@@ -336,16 +335,7 @@ public class DeptWindow extends JFrame {
 		}
 	}
 
-	/*private void getAllDepartamentos() {
-		List<Departamento> departamentos = departamentoServicio.getAll();
-		addMensaje(true, "Se han recuperado: " + departamentos.size() + " departamentos");
-		DefaultListModel<Departamento> defModel = new DefaultListModel<>();
 
-		defModel.addAll(departamentos);
-
-		JListAllCuentas.setModel(defModel);
-
-	}*/
 	private void ConsultarCuentasPorIdEmpleado(int numeroEmpleadoTecleado)  {
 		List<Account> cuentas;
 		try {

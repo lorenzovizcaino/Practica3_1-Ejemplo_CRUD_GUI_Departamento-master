@@ -10,17 +10,15 @@ import java.math.BigDecimal;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import modelo.Account;
-import modelo.Departamento;
 import modelo.Empleado;
 
-public class CreateNewDeptDialog extends JDialog {
+public class CreateNewAccountDialog extends JDialog {
 
 	/**
 	 * 
@@ -89,7 +87,7 @@ public class CreateNewDeptDialog extends JDialog {
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cuentaACrearOActualizar=null;
-				CreateNewDeptDialog.this.dispose();
+				CreateNewAccountDialog.this.dispose();
 				
 			}
 		});
@@ -118,7 +116,7 @@ public class CreateNewDeptDialog extends JDialog {
 					
 					
 					
-					CreateNewDeptDialog.this.dispose();
+					CreateNewAccountDialog.this.dispose();
 				}
 			}
 		};
@@ -127,7 +125,7 @@ public class CreateNewDeptDialog extends JDialog {
 
 	}
 
-	public CreateNewDeptDialog(Window owner, String title, ModalityType modalityType, Account cuenta, Empleado empleado) {
+	public CreateNewAccountDialog(Window owner, String title, ModalityType modalityType, Account cuenta, Empleado empleado) {
 		super(owner, title, modalityType);
 		this.empleado=empleado;
 		initComponents();
